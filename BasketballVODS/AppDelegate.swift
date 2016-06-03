@@ -12,6 +12,7 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDelegate {
 
     var window: UIWindow?
+    var count: Int?
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
@@ -20,6 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         let navigationController = splitViewController.viewControllers[splitViewController.viewControllers.count-1] as! UINavigationController
         navigationController.topViewController!.navigationItem.leftBarButtonItem = splitViewController.displayModeButtonItem()
         splitViewController.delegate = self
+        self.count = 0
         return true
     }
 
@@ -56,6 +58,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         }
         return false
     }
+    func incrementNetworkActivity() {
+        self.count! += 1
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+    }
+    
+    func decrementNetworkActivity() {
+        if self.count! > 0 {
+            self.count! -= 1
+        }
+        if self.count! == 0 {
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+        }
+    }
+    
+    func resetNetworkActivity() {
+        self.count! = 0
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+    }
+    
+
 
 }
 
